@@ -17,6 +17,21 @@ np.random.seed(seed)
 from tensorflow import set_random_seed
 set_random_seed(seed)
 
+def get_label(act):
+    i = 0
+    list_label = []
+    while i < len(act):
+        j = 0
+        while j < (len(act.iat[i, 0]) - 1):
+            if j > 0:
+                list_label.append(act.iat[i, 0][j + 1])
+            else:
+                pass
+            j = j + 1
+        i = i + 1
+    return  list_label
+
+
 def dataset_summary(dataset):
     df = pd.read_csv(dataset, sep=",")
     print("Activity Distribution\n", df['Activity'].value_counts())
@@ -37,7 +52,6 @@ def get_image(act_val, time_val, max_trace, n_activity):
     matrix_zero = [max_trace, n_activity, 2]
     image = np.zeros(matrix_zero)
     list_image = []
-    list_label = []
 
     while i < len(time_val):
         j = 0
@@ -94,11 +108,10 @@ def get_image(act_val, time_val, max_trace, n_activity):
             if cont == 1:
                 pass
             else:
-                list_label.append(act_val.iat[i, 0][0 + j])
                 list_image.append(image)
                 image = np.zeros(matrix_zero)
         i = i + 1
-    return list_image, list_label
+    return list_image
 
 #import dataset
 df, max_trace, n_caseid, n_activity = dataset_summary("dataset/helpdesk.csv")
@@ -117,8 +130,11 @@ test_act = act[size:]
 test_temp = temp[size:]
 
 #generate training and test set
-X_train, l_train = get_image(train_act, train_temp, max_trace, n_activity)
-X_test, l_test = get_image(test_act, test_temp, max_trace, n_activity)
+X_train = get_image(train_act, train_temp, max_trace, n_activity)
+X_test = get_image(test_act, test_temp, max_trace, n_activity)
+
+l_train = get_label(train_act)
+l_test = get_label(test_act)
 
 le = preprocessing.LabelEncoder()
 l_train = le.fit_transform(l_train)
@@ -165,7 +181,7 @@ model.compile(loss={'act_output': 'categorical_crossentropy'}, optimizer=opt, me
 early_stopping = EarlyStopping(monitor='val_loss', patience=6)
 history = model.fit(X_train, {'act_output': train_Y_one_hot}, validation_split=0.2, verbose=1,
                     callbacks=[early_stopping], batch_size=128, epochs=500)
-model.save("helpdesk.h5")
+model.save("BPI12_W_complete.h5")
 
 # Print confusion matrix for training data
 y_pred_train = model.predict(X_train)
@@ -173,7 +189,7 @@ y_pred_train = model.predict(X_train)
 max_y_pred_train = np.argmax(y_pred_train, axis=1)
 print(classification_report(l_train, max_y_pred_train, digits=3))
 
-score = model.evaluate(X_test, test_Y_one_hot, verbose=1, batch_size=1)
+score = model.evaluate(X_test, test_Y_one_hot, verbose=1)
 
 print('\nAccuracy on test data: ', score[1])
 print('\nLoss on test data: ', score[0])
@@ -183,6 +199,3 @@ y_pred_test = model.predict(X_test)
 max_y_pred_test = np.argmax(y_pred_test, axis=1)
 max_y_test = np.argmax(test_Y_one_hot, axis=1)
 print(classification_report(max_y_test, max_y_pred_test, digits=3))
-
-
-
