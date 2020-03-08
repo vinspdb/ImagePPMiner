@@ -155,7 +155,7 @@ y_pred_train = model.predict(X_train)
 max_y_pred_train = np.argmax(y_pred_train, axis=1)
 print(classification_report(l_train, max_y_pred_train, digits=3))
 
-score = model.evaluate(X_test, test_Y_one_hot, verbose=1, batch_size=1)
+score = model.evaluate(X_test, test_Y_one_hot, verbose=1)
 
 print('\nAccuracy on test data: ', score[1])
 print('\nLoss on test data: ', score[0])
