@@ -165,7 +165,7 @@ model.compile(loss={'act_output': 'categorical_crossentropy'}, optimizer=opt, me
 early_stopping = EarlyStopping(monitor='val_loss', patience=6)
 history = model.fit(X_train, {'act_output': train_Y_one_hot}, validation_split=0.2, verbose=1,
                     callbacks=[early_stopping], batch_size=128, epochs=500)
-model.save("BPI12_W_complete.h5")
+model.save("helpdesk.h5")
 
 # Print confusion matrix for training data
 y_pred_train = model.predict(X_train)
