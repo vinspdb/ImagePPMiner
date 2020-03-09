@@ -55,8 +55,8 @@ def get_image(act_val, time_val, max_trace, n_activity):
         j = 0
         list_act = []
         list_temp = []
-        cont1, cont2, cont3, cont4, cont5, cont6, cont7, cont8, cont9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
-        diff1, diff2, diff3, diff4, diff5, diff6, diff7, diff8, diff9 = 0, 0, 0, 0, 0, 0, 0, 0, 0
+        cont1, cont2, cont3, cont4, cont5, cont6 = 0, 0, 0, 0, 0, 0
+        diff1, diff2, diff3, diff4, diff5, diff6 = 0, 0, 0, 0, 0, 0
         while j < (len(act_val.iat[i, 0]) - 1):
             start_trace = time_val.iat[i, 0][0]
             if act_val.iat[i, 0][0 + j] == 1:
