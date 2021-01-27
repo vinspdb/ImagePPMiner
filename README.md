@@ -11,20 +11,12 @@ Please cite our work if you find it useful for your research and work.
 
 ```
 @INPROCEEDINGS{8786066,
-
   author={V. {Pasquadibisceglie} and A. {Appice} and G. {Castellano} and D. {Malerba}},
-
   booktitle={2019 International Conference on Process Mining (ICPM)}, 
-
   title={Using Convolutional Neural Networks for Predictive Process Analytics}, 
-
   year={2019},
-
   volume={},
-
   number={},
-
   pages={129-136},
-
   doi={10.1109/ICPM.2019.00028}}
 ```
