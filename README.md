@@ -1,6 +1,6 @@
 # Using Convolutional Neural Networks for Predictive Process Analytics
 
-**The repository contains code refered to the work:**
+**The repository contains code referred to the work:**
 
 *Vincenzo Pasquadibisceglie, Annalisa Appice, Giovanna Castellano, Donato Malerba*
 
