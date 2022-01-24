@@ -16,9 +16,19 @@ seed = 123
 np.random.seed(seed)
 from tensorflow import set_random_seed
 set_random_seed(seed)
+import argparse
+
 if __name__ == '__main__':
-    dataset = sys.argv[1]
-    n_layer = sys.argv[2]
+
+    parser = argparse.ArgumentParser(description='CNN for next activity prediction.')
+
+    parser.add_argument('-event_log', type=str, help="Event log name")
+    parser.add_argument('-n_layers', type=int, help="Number of convolutional layers")
+
+    args = parser.parse_args()
+
+    dataset = args.event_log
+    n_layer = args.n_layers
     pm = ImagePPMiner(dataset)
     log = pm.import_log()
     max_trace, n_caseid, n_activity = pm.dataset_summary(log=log)
