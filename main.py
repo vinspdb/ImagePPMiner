@@ -1,21 +1,18 @@
 import numpy as np
-from keras.utils import np_utils
+import tensorflow as tf
 from sklearn import preprocessing
-from keras.layers import Conv2D, Activation
-from keras import regularizers
+from tensorflow.keras.layers import Conv2D, Activation
 from sklearn.metrics import classification_report
-from keras.models import Sequential
-from keras.layers.core import Flatten, Dense
-from keras.layers.convolutional import MaxPooling2D
-from keras.optimizers import Nadam
-from keras.callbacks import EarlyStopping
-from keras.layers.normalization import BatchNormalization
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Flatten, Dense
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.optimizers import Nadam
+from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.layers import BatchNormalization
 from ImagePPMiner import ImagePPMiner
-import sys
 seed = 123
 np.random.seed(seed)
-from tensorflow import set_random_seed
-set_random_seed(seed)
+tf.random.set_seed(seed)
 import argparse
 
 if __name__ == '__main__':
@@ -50,8 +47,8 @@ if __name__ == '__main__':
     X_test = np.asarray(X_test)
     l_test = np.asarray(l_test)
 
-    train_Y_one_hot = np_utils.to_categorical(l_train, num_classes)
-    test_Y_one_hot = np_utils.to_categorical(l_test, num_classes)
+    train_Y_one_hot = tf.keras.utils.to_categorical(l_train, num_classes)
+    test_Y_one_hot = tf.keras.utils.to_categorical(l_test, num_classes)
 
     ##############neural network architecture##############
     model = Sequential()
@@ -60,34 +57,34 @@ if __name__ == '__main__':
 
     if int(n_layer) == 1:
         model.add(Conv2D(32, (2, 2), input_shape=input_shape, padding='same', kernel_initializer='glorot_uniform',
-                         kernel_regularizer=regularizers.l2(reg)))
+                         kernel_regularizer=tf.keras.regularizers.l2(reg)))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2)))
     elif int(n_layer) == 2:
         model.add(Conv2D(32, (2, 2), input_shape=input_shape, padding='same', kernel_initializer='glorot_uniform',
-                         kernel_regularizer=regularizers.l2(reg)))
+                         kernel_regularizer=tf.keras.regularizers.l2(reg)))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2), padding='same'))
 
-        model.add(Conv2D(64, (4, 4), padding='same', kernel_regularizer=regularizers.l2(reg), ))
+        model.add(Conv2D(64, (4, 4), padding='same', kernel_regularizer=tf.keras.regularizers.l2(reg), ))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2), padding='same'))
     elif int(n_layer) == 3:
         model.add(Conv2D(32, (2, 2), input_shape=input_shape, padding='same', kernel_initializer='glorot_uniform',
-                         kernel_regularizer=regularizers.l2(reg)))
+                         kernel_regularizer=tf.keras.regularizers.l2(reg)))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2), padding='same'))
 
-        model.add(Conv2D(64, (4, 4), padding='same', kernel_regularizer=regularizers.l2(reg), kernel_initializer='glorot_uniform'))
+        model.add(Conv2D(64, (4, 4), padding='same', kernel_regularizer=tf.keras.regularizers.l2(reg), kernel_initializer='glorot_uniform'))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2), padding='same'))
 
-        model.add(Conv2D(128, (8, 8), padding='same', kernel_regularizer=regularizers.l2(reg), kernel_initializer='glorot_uniform'))
+        model.add(Conv2D(128, (8, 8), padding='same', kernel_regularizer=tf.keras.regularizers.l2(reg), kernel_initializer='glorot_uniform'))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2), padding='same'))
