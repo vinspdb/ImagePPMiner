@@ -20,7 +20,7 @@ Please cite our work if you find it useful for your research and work.
   pages={129-136},
   doi={10.1109/ICPM.2019.00028}}
 ```
-# How to use
+# How to use:
 
 Train neural network
 - event_log: event log name
