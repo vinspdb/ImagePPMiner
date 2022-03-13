@@ -46,7 +46,7 @@ class ImagePPMiner:
                 start_trace = time_val.iat[i, 0][0]
                 dict_act[act_val.iat[i, 0][0 + j]] += 1
                 duration = time_val.iat[i, 0][0 + j] - start_trace
-                days = (duration.total_seconds())/86400
+                days = (duration.total_seconds())
                 dict_time[act_val.iat[i, 0][0 + j]] = days
                 l_act = list(dict_act.values())
                 l_time = list(dict_time.values())
