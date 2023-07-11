@@ -20,13 +20,18 @@ class ImagePPMiner:
         return dataframe
 
     def generate_prefix_trace(self, log, n_caseid):
-        act = log.groupby('case:concept:name', sort=False).agg({'concept:name': lambda x: list(x)})
-        temp = log.groupby('case:concept:name', sort=False).agg({'time:timestamp': lambda x: list(x)})
-        size = int((n_caseid / 3) * 2)
-        train_act = act[:size]
-        train_temp = temp[:size]
-        test_act = act[size:]
-        test_temp = temp[size:]
+        grouped = log.groupby("case:concept:name")
+        start_timestamps = grouped["time:timestamp"].min().reset_index()
+        start_timestamps = start_timestamps.sort_values("time:timestamp", ascending=True, kind="mergesort")
+        train_ids = list(start_timestamps["case:concept:name"])[:int(0.66 * len(start_timestamps))]
+        train = log[log["case:concept:name"].isin(train_ids)].sort_values("time:timestamp", ascending=True,kind='mergesort')
+        test = log[~log["case:concept:name"].isin(train_ids)].sort_values("time:timestamp", ascending=True,kind='mergesort')
+        
+        train_act = train.groupby('case:concept:name', sort=False).agg({'concept:name': lambda x: list(x)})
+        train_temp = train.groupby('case:concept:name', sort=False).agg({'time:timestamp': lambda x: list(x)})
+        test_act = test.groupby('case:concept:name', sort=False).agg({'concept:name': lambda x: list(x)})
+        test_temp = test.groupby('case:concept:name', sort=False).agg({'time:timestamp': lambda x: list(x)})
+
         return train_act, train_temp, test_act, test_temp
 
     @staticmethod
