@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     print(model.summary())
 
-    opt = Nadam(lr=0.0002, beta_1=0.9, beta_2=0.999, epsilon=1e-08, schedule_decay=0.004, clipvalue=3)
+    opt = Nadam(learning_rate=0.0002, beta_1=0.9, beta_2=0.999, epsilon=1e-08, schedule_decay=0.004, clipvalue=3)
     model.compile(loss={'act_output': 'categorical_crossentropy'}, optimizer=opt, metrics=['accuracy'])
     early_stopping = EarlyStopping(monitor='val_loss', patience=6)
     history = model.fit(X_train, {'act_output': train_Y_one_hot}, validation_split=0.2, verbose=2, callbacks=[early_stopping], batch_size=128, epochs=500)
