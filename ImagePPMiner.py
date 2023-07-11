@@ -53,8 +53,8 @@ class ImagePPMiner:
                 list_act.append(l_act)
                 list_temp.append(l_time)
                 j = j + 1
-                cont = 0
-                lenk = len(list_act)
+            cont = 0
+            lenk = len(list_act)
             image = np.zeros(matrix_zero)
             while cont < lenk:
                 z = 0
