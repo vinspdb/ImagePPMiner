@@ -35,9 +35,10 @@ if __name__ == '__main__':
 
     l_train = pm.get_label(train_act)
     l_test = pm.get_label(test_act)
-
+    df_labels = np.unique(l_train + l_test)
     le = preprocessing.LabelEncoder()
-    l_train = le.fit_transform(l_train)
+    le.fit_transform(df_labels)
+    l_train = le.transform(l_train)
     l_test = le.transform(l_test)
     num_classes = le.classes_.size
 
