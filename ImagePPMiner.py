@@ -54,16 +54,17 @@ class ImagePPMiner:
                 list_temp.append(l_time)
                 j = j + 1
                 cont = 0
-                lenk = len(list_act) - 1
-                while cont <= lenk:
-                    z = 0
-                    while z < n_activity:
-                        image[(max_trace - 1) - cont][z] = [list_act[lenk - cont][z], list_temp[lenk - cont][z]]
-                        z = z + 1
-                    cont = cont + 1
-                if cont > 1:
-                    list_image.append(image)
-                    image = np.zeros(matrix_zero)
+                lenk = len(list_act)
+                image = np.zeros(matrix_zero)
+            while cont < lenk:
+                z = 0
+                image = np.delete(image,0,0)
+                image = np.append(image, np.zeros([1, n_activity, 2]), axis=0)
+                while z < n_activity:
+                    image[(max_trace - 1)][z] = [list_act[cont][z], list_temp[cont][z]]
+                    z = z + 1
+                cont = cont + 1
+                list_image.append(image)
             i = i + 1
         return list_image
 
@@ -75,8 +76,7 @@ class ImagePPMiner:
         while i < len(act):
             j = 0
             while j < (len(act.iat[i, 0]) - 1):
-                if j > 0:
-                    list_label.append(act.iat[i, 0][j + 1])
+                list_label.append(act.iat[i, 0][j + 1])
                 j = j + 1
             i = i + 1
         return list_label
