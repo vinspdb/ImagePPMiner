@@ -55,7 +55,7 @@ class ImagePPMiner:
                 j = j + 1
                 cont = 0
                 lenk = len(list_act)
-                image = np.zeros(matrix_zero)
+            image = np.zeros(matrix_zero)
             while cont < lenk:
                 z = 0
                 image = np.delete(image,0,0)
