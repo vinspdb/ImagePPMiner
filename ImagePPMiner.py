@@ -49,10 +49,10 @@ class ImagePPMiner:
             dict_time = dict.fromkeys(a, 0)
             while j < (len(act_val.iat[i, 0]) - 1):
                 start_trace = time_val.iat[i, 0][0]
-                dict_act[act_val.iat[i, 0][0 + j]] += 1
-                duration = time_val.iat[i, 0][0 + j] - start_trace
+                dict_act[act_val.iat[i, 0][j]] += 1
+                duration = time_val.iat[i, 0][j] - start_trace
                 days = (duration.total_seconds())/86400
-                dict_time[act_val.iat[i, 0][0 + j]] = days
+                dict_time[act_val.iat[i, 0][j]] = days
                 l_act = list(dict_act.values())
                 l_time = list(dict_time.values())
                 list_act.append(l_act)
